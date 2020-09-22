@@ -8,7 +8,7 @@ code segment
     mov al,[bx]
     mov ah,0
     mov dx,0
-    mov cx,3
+    mov cx,123
 s:  add dx,ax
     loop s 
 
