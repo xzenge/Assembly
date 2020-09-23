@@ -10,6 +10,9 @@ s:  mov [bl],bl
     inc bl
     loop s
 
+    mov ax,4c00H
+    int 21H
+
 code ends
 
 end
