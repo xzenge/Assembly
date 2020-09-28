@@ -14,7 +14,7 @@ stack ends
 
 codesg segment
 
-start:  mov ax,0b878h
+start:  mov ax,0b864h
         mov ds,ax
 
         mov di,0
