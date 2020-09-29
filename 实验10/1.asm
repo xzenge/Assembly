@@ -19,20 +19,25 @@ show_str:   push ax
             push bx
             push cx
             push dx
+            push si
 
+            mov ah,0 ;开始计算row
+            mov al,dl
+            push cx;cx压栈，后续需要借用cx寄存器做mul
+            mov cx,2
+            push dx ;dx压栈，防止mul结果覆盖dx
+            mul cx    ;ax=dl * 2
 
-            mov bx,0
-            mov al,cl
-            mov cx,0
-            mov cl,dl
-row:        add bx,2
-            loop row
+            mov bx,ax ;开始计算col
+            mov ah,0
+            pop dx ;重新取dx
+            mov al,dh
+            mov cx,0a0h
+            mul cx ;ax = dh * a0
+            add bx,ax ;bx最终存放显示偏移量
 
-            mov cl,dh
-col:        add bx,0a0h
-            loop col
-
-            mov dl,al ; 颜色
+            pop cx ;重新取会cl中的值
+            mov dl,cl ; 颜色
             mov ax,0b800h
             mov es,ax
             mov di,bx
@@ -42,13 +47,13 @@ cap:        mov cl,[si]
             jcxz ok
             mov al,[si]
             mov ah,dl
-            ;mov ah,01110001b
             mov es:[di],ax
             inc si
             add di,2
             jmp short cap 
 
-ok:         pop dx
+ok:         pop si
+            pop dx
             pop cx
             pop bx
             pop ax
