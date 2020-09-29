@@ -5,19 +5,23 @@ start:      mov ax,4240h
             mov dx,000fh
             mov cx,0ah
             call divdw
+
             mov ax,4c00h
             int 21h
-divdw:      push ax
+
+divdw:      mov bx,ax
             mov ax,dx
             mov dx,0
-            div cx  ;ax=int(H/N)  dx=rem(H/N)
-            mov bx,ax ;bx=(H/N)
-            pop ax ;ax=L
-            push dx
-            div cx ; [rem(H/N)*65536+L]/N
+            div cx   ;ax=商  dx余数
+
+            push ax ;压栈商=int(H/N) 
+
+            mov ax,bx
+            div cx  ;[rem(H/N) * 65536 + L]/N 
+
             mov cx,dx
-            pop bx
-            add ax,bx
+            pop dx ;出栈结果高16位
+
             ret
 
 code ends
