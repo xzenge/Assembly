@@ -28,6 +28,7 @@ dtoc:   push ax
 
         mov bx,10
         mov di,0
+        mov dx,0
 s0:     div bx ;ax/10  
         mov cx,ax
         jcxz dtoc_ok         ;商为0，停止循环
