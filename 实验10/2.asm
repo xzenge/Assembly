@@ -9,7 +9,8 @@ start:      mov ax,4240h
             mov ax,4c00h
             int 21h
 
-divdw:      mov bx,ax
+divdw:      push bx
+            mov bx,ax
             mov ax,dx
             mov dx,0
             div cx   ;ax=商  dx余数
@@ -22,6 +23,7 @@ divdw:      mov bx,ax
             mov cx,dx
             pop dx ;出栈结果高16位
 
+            pop bx
             ret
 
 code ends
